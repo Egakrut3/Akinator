@@ -6,7 +6,7 @@ SRC_DIR = ./src/
 SRC_SUF = .cpp
 make_src_path = $(addprefix $(SRC_DIR), $(addsuffix $(SRC_SUF), $(1)))
 
-H_DIR = ./include/ ./Bin_tree/include/
+H_DIR = ./include/
 
 LIB_DIR = ./static_libs/
 LIBS = Colored_printf File_input Bin_tree
@@ -22,7 +22,7 @@ CXX_FLAGS = -Wshadow -Winit-self -Wredundant-decls -Wcast-align -Wundef -Wfloat-
 
 TARGET = $(addprefix $(BIN_DIR), Test.exe)
 
-OBJ = My_functions Option_manager main
+OBJ = My_functions Option_manager Akinator main
 
 make_object = $(call make_bin_path, $(1)) : $(call make_src_path, $(1)); \
 @$(CXX) $(CXX_FLAGS) -c $$< $(addprefix -I, $(H_DIR)) -o $$@
@@ -38,12 +38,13 @@ test : all
 
 #make list of childs
 prepare :
-	@make -C ./Bin_tree/
 	@mkdir -p $(BIN_DIR)
 
 $(call make_object, My_functions)
 
 $(call make_object, Option_manager)
+
+$(call make_object, Akinator)
 
 $(call make_object, main)
 
