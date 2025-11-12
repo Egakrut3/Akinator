@@ -70,7 +70,7 @@ errno_t Akinator(Bin_tree_node *const cur_node) { //TODO - add handling invalid 
         if (strcmp(str, "yes")) {
             printf_s("Do you want to add new person?\n");
             CHECK_FUNC(My_scanf_s, 1, "%s%*1c", str, MESSAGE_MAX_SIZE);
-            if (strcmp(str, "yes")) {
+            if (!strcmp(str, "yes")) {
                 CHECK_FUNC(add_node, cur_node);
             }
         }

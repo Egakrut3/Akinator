@@ -22,8 +22,13 @@ int main(int const argc, char const *const *const argv) {
         Config_Dtor(&cur_config);   \
         Bin_tree_Dtor(&cur_tree);
 
+    FILE *dump_stream = nullptr;
+    MAIN_CHECK_FUNC(fopen_s, &dump_stream, "./Visual_html/Tree_log.html", "w"); //TODO -
+    fclose(dump_stream);
+
     size_t const MESSAGE_MAX_SIZE = 10;
     char str[MESSAGE_MAX_SIZE] = {};
+    size_t counter = 0;
     while (true) {
         printf_s("Do you want to start guessing? Enter yes, if you do\n");
         CHECK_FUNC(My_scanf_s, 1, "%s%*1c", str, MESSAGE_MAX_SIZE);
@@ -32,16 +37,22 @@ int main(int const argc, char const *const *const argv) {
         }
 
         Akinator(cur_tree.root);
-    }
 
-    FILE *dump_stream = nullptr;
-    MAIN_CHECK_FUNC(fopen_s, &dump_stream, "./Visual_html/Tree_log.html", "w");
-    #undef FINAL_CODE
-    #define FINAL_CODE              \
-        Config_Dtor(&cur_config);   \
+        MAIN_CHECK_FUNC(fopen_s, &dump_stream, "./Visual_html/Tree_log.html", "a");
+        #undef FINAL_CODE
+        #define FINAL_CODE              \
+            Config_Dtor(&cur_config);   \
+            Bin_tree_Dtor(&cur_tree);   \
+            fclose(dump_stream);
+
+        BIN_TREE_VISUAL_DUMP(cur_tree, dump_stream, counter, MAIN_CHECK_FUNC);
+        ++counter;
         fclose(dump_stream);
-
-    BIN_TREE_VISUAL_DUMP(cur_tree, dump_stream, MAIN_CHECK_FUNC);
+        #undef FINAL_CODE
+        #define FINAL_CODE              \
+            Config_Dtor(&cur_config);   \
+            Bin_tree_Dtor(&cur_tree);
+    }
 
     colored_printf(GREEN, BLACK, "\n\n\nCOMMIT GITHUB\n\n");
     CLEAR_RESOURCES();
