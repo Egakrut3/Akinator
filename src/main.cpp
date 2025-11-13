@@ -24,20 +24,17 @@ int main(int const argc, char const *const *const argv) {
 
     MAIN_CHECK_FUNC(clear_file, "./Visual_html/Tree_log.html");
 
-    size_t const MESSAGE_MAX_SIZE = 10;
-    char str[MESSAGE_MAX_SIZE] = {};
     size_t counter = 0;
     while (true) {
-        printf_s("Do you want to start guessing? Enter yes, if you do\n");
-        CHECK_FUNC(My_scanf_s, 1, "%s%*1c", str, MESSAGE_MAX_SIZE);
-        if (strcmp(str, "yes")) { //TODO -
+        printf_s("Do you want to start guessing?\n");
+        if (!check_answer()) {
             break;
         }
 
         Akinator(cur_tree.root);
 
         FILE *dump_stream = nullptr;
-        MAIN_CHECK_FUNC(fopen_s, &dump_stream, "./Visual_html/Tree_log.html", "a"); //TODO - possibly au/wu
+        MAIN_CHECK_FUNC(fopen_s, &dump_stream, "./Visual_html/Tree_log.html", "a"); //TODO - possibly uw
         #undef FINAL_CODE
         #define FINAL_CODE              \
             Config_Dtor(&cur_config);   \
