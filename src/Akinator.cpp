@@ -46,18 +46,20 @@ errno_t add_node(Bin_tree_node *const cur_node) {
         CHECK_FUNC(My_scanf_s, 1, "%[^\n]%*1c", str2, AKINATOR_MESSAGE_MAX_SIZE);
         printf_s("Thank you. You can try again\n");
 
-        CHECK_FUNC(split_node, cur_node, cur_node->val, str2);
-        free((char *)cur_node->val);
-        CHECK_FUNC(My_strdup, &cur_node->val, str1);
+        CHECK_FUNC(split_node, cur_node, cur_node->val, str2, cur_node->need_copy, true);
+        if (cur_node->need_copy) { free((char *)cur_node->val); }
+        TREE_ELEM_COPY(cur_node->val, str1);
+        cur_node->need_copy = true;
     }
     else {
         printf_s("What person are you thinking?\n");
         CHECK_FUNC(My_scanf_s, 1, "%[^\n]%*1c", str2, AKINATOR_MESSAGE_MAX_SIZE);
         printf_s("Thank you. You can try again\n");
 
-        CHECK_FUNC(split_node, cur_node, str2, cur_node->val);
-        free((char *)cur_node->val);
-        CHECK_FUNC(My_strdup, &cur_node->val, str1);
+        CHECK_FUNC(split_node, cur_node, str2, cur_node->val, true, cur_node->need_copy);
+        if (cur_node->need_copy) { free((char *)cur_node->val); }
+        TREE_ELEM_COPY(cur_node->val, str1);
+        cur_node->need_copy = true;
     }
 
     return 0;
@@ -78,7 +80,7 @@ errno_t Akinator(Bin_tree_node *const cur_node) {
             CHECK_FUNC(My_scanf_s, 1, "%[^\n]%*1c", str, AKINATOR_MESSAGE_MAX_SIZE);
             printf_s("Thank you. You can try again\n");
 
-            free((char *)cur_node->val);
+            if (cur_node->need_copy) { free((char *)cur_node->val); }
             CHECK_FUNC(My_strdup, &cur_node->val, str);
 
             return 0;
