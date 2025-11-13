@@ -73,7 +73,7 @@ errno_t Akinator(Bin_tree_node *const cur_node) {
 
     char str[AKINATOR_MESSAGE_MAX_SIZE] = {};
     if (cur_node->left == nullptr) {
-        if (!strcmp(cur_node->val, INITIAL_VAL)) {
+        if (TREE_ELEM_EQUAL(cur_node->val, INITIAL_VAL)) {
             printf_s("I have no idea who could it be. Please enter someone\n");
             CHECK_FUNC(My_scanf_s, 1, "%[^\n]%*1c", str, AKINATOR_MESSAGE_MAX_SIZE);
             printf_s("Thank you. You can try again\n");
