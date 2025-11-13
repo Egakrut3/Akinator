@@ -22,9 +22,7 @@ int main(int const argc, char const *const *const argv) {
         Config_Dtor(&cur_config);   \
         Bin_tree_Dtor(&cur_tree);
 
-    FILE *dump_stream = nullptr;
-    MAIN_CHECK_FUNC(fopen_s, &dump_stream, "./Visual_html/Tree_log.html", "w"); //TODO -
-    fclose(dump_stream);
+    MAIN_CHECK_FUNC(clear_file, "./Visual_html/Tree_log.html");
 
     size_t const MESSAGE_MAX_SIZE = 10;
     char str[MESSAGE_MAX_SIZE] = {};
@@ -38,7 +36,8 @@ int main(int const argc, char const *const *const argv) {
 
         Akinator(cur_tree.root);
 
-        MAIN_CHECK_FUNC(fopen_s, &dump_stream, "./Visual_html/Tree_log.html", "a");
+        FILE *dump_stream = nullptr;
+        MAIN_CHECK_FUNC(fopen_s, &dump_stream, "./Visual_html/Tree_log.html", "a"); //TODO - possibly au/wu
         #undef FINAL_CODE
         #define FINAL_CODE              \
             Config_Dtor(&cur_config);   \
